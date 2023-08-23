@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+desafio,com.ibm.desafio.config,SwaggerConfig,0,40,0,0,0,15,0,3,0,3
+desafio,com.ibm.desafio.service,TaxaMensalService,23,169,1,5,5,31,1,15,0,13
+desafio,com.ibm.desafio.controller,TaxaMensalController,0,93,0,0,0,17,0,9,0,9
+desafio,com.ibm.desafio.mapper,TaxaMensalMapperImpl,0,330,0,24,0,80,0,21,0,9

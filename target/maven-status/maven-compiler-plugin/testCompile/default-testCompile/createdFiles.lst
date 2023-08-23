@@ -1,0 +1,7 @@
+com/ibm/desafio/common/TaxaMensalConstants.class
+com/ibm/desafio/handler/GeneralExceptionHandler.class
+com/ibm/desafio/client/TaxaMensalEntityClientTest.class
+com/ibm/desafio/DesafioApplicationTests.class
+com/ibm/desafio/controller/TaxaMensalEntityControllerTest.class
+com/ibm/desafio/mapper/TaxaMensalEntityMapperTest.class
+com/ibm/desafio/service/TaxaMensalEntityServiceTest.class

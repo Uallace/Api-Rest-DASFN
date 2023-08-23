@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaxaMensalController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">desafio</a> &gt; <a href="index.source.html" class="el_package">com.ibm.desafio.controller</a> &gt; <span class="el_source">TaxaMensalController.java</span></div><h1>TaxaMensalController.java</h1><pre class="source lang-java linenums">package com.ibm.desafio.controller;
+
+import com.ibm.desafio.client.TaxaMensalClient;
+import com.ibm.desafio.model.request.TaxaMensalRequest;
+import com.ibm.desafio.model.response.TaxaMensalResponse;
+import com.ibm.desafio.mapper.TaxaMensalMapper;
+import com.ibm.desafio.util.constraint.jacoco.ExcludeFromJacocoGenerated;
+import com.ibm.desafio.service.TaxaMensalService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
+import java.util.List;
+
+
+@RestController
+@RequestMapping(&quot;/api&quot;)
+@Api(value=&quot;Api REST Taxa Mensal&quot;)
+@CrossOrigin(origins = &quot;*&quot;)
+<span class="fc" id="L25">public class TaxaMensalController {</span>
+
+    @Autowired
+    private TaxaMensalService service;
+
+    @Autowired
+    private TaxaMensalClient client;
+
+<span class="fc" id="L33">    private TaxaMensalMapper mapper = Mappers.getMapper(TaxaMensalMapper.class);</span>
+
+    @GetMapping
+    @ExcludeFromJacocoGenerated
+    @ApiOperation(value = &quot;Retorna lista de taxas da Api externa&quot;)
+    public List&lt;TaxaMensalResponse&gt; getAllApi() {
+        return client.getAllApi().value;
+    }
+
+    @PostMapping(&quot;/onbording&quot;)
+    @ApiOperation(value = &quot;Salva lista de taxas da Api externa&quot;)
+    public ResponseEntity salveApiTaxaMensal(@RequestBody @Valid List&lt;TaxaMensalRequest&gt; requestList){
+<span class="fc" id="L45">        List&lt;TaxaMensalResponse&gt; responseList = mapper.dtoListToResponseList(service.saveApi(requestList));</span>
+<span class="fc" id="L46">        return new ResponseEntity(responseList, HttpStatus.CREATED);</span>
+    }
+
+    @GetMapping(&quot;/taxas&quot;)
+    @ApiOperation(value = &quot;Retorna lista de taxas salvas no Banco de dados&quot;)
+    public ResponseEntity getAllTaxas(){
+<span class="fc" id="L52">        List&lt;TaxaMensalResponse&gt; response = mapper.dtoListToResponseList(service.getAllTaxas());</span>
+<span class="fc" id="L53">        return ResponseEntity.ok(response);</span>
+    }
+
+    @GetMapping(&quot;/pages&quot;)
+    @ApiOperation(value = &quot;Retorna lista de taxas com paginacao&quot;)
+    public ResponseEntity getPages(Pageable pageable){
+<span class="fc" id="L59">        return ResponseEntity.ok(service.getPages(pageable));</span>
+    }
+
+    @GetMapping(&quot;/anomes/{anoMes}&quot;)
+    @ApiOperation(value = &quot;Retorna taxas pelo AnoMes&quot;)
+    public ResponseEntity getByAnoMes(@PathVariable(&quot;anoMes&quot;) String anoMes){
+<span class="fc" id="L65">        List&lt;TaxaMensalResponse&gt; responseList = mapper.dtoListToResponseList(service.getByAnoMes(anoMes));</span>
+<span class="fc" id="L66">        return ResponseEntity.ok(responseList);</span>
+    }
+
+    @GetMapping(&quot;/taxa/{id}&quot;)
+    @ApiOperation(value = &quot;Retorna taxa pelo Id&quot;)
+    public ResponseEntity findByIdTaxas(@PathVariable(&quot;id&quot;) Long id){
+<span class="fc" id="L72">        TaxaMensalResponse response = mapper.dtoToResponse(service.getById(id));</span>
+<span class="fc" id="L73">        return ResponseEntity.ok(response);</span>
+    }
+
+    @PostMapping(&quot;/salvar&quot;)
+    @ApiOperation(value = &quot;Salva uma taxa no banco de dados&quot;)
+    public ResponseEntity save(@RequestBody @Valid TaxaMensalRequest request){
+<span class="fc" id="L79">        TaxaMensalResponse response = mapper.dtoToResponse(service.saveEntity(request));</span>
+<span class="fc" id="L80">        return new ResponseEntity(response, HttpStatus.CREATED);</span>
+    }
+
+    @DeleteMapping(&quot;/taxa/{id}&quot;)
+    @ApiOperation(value = &quot;Deleta taxa pelo Id&quot;)
+    public ResponseEntity delete(@PathVariable(&quot;id&quot;) Long id) {
+<span class="fc" id="L86">        service.delete(id);</span>
+<span class="fc" id="L87">        return ResponseEntity.noContent().build();</span>
+    }
+
+    @PutMapping(&quot;/taxa/{id}&quot;)
+    @ApiOperation(value = &quot;Atualiza taxa de juros&quot;)
+    public ResponseEntity put(@RequestBody @Valid TaxaMensalRequest request, @PathVariable(&quot;id&quot;) Long id){
+<span class="fc" id="L93">        TaxaMensalResponse response = mapper.dtoToResponse(service.update(request,id));</span>
+<span class="fc" id="L94">        return ResponseEntity.ok(response);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
